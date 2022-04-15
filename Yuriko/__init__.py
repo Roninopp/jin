@@ -36,9 +36,7 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     )
     quit(1)
 
-ENV = bool(os.environ.get("ENV", False))
-
-if ENV:
+if ENV := bool(os.environ.get("ENV", False)):
     TOKEN = os.environ.get("TOKEN", None)
 
     try:
@@ -114,7 +112,7 @@ if ENV:
     ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
 
     try:
-        BL_CHATS = set(int(x) for x in os.environ.get("BL_CHATS", "").split())
+        BL_CHATS = {int(x) for x in os.environ.get("BL_CHATS", "").split()}
     except ValueError:
         raise Exception("Your blacklisted chats list does not contain valid integers.")
 
@@ -238,8 +236,7 @@ pbot = Client(
     bot_token=TOKEN,
     workers=min(32, os.cpu_count() + 4),
 )
-apps = []
-apps.append(pbot)
+apps = [pbot]
 
 
 async def get_entity(client, entity):

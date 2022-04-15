@@ -359,8 +359,7 @@ def punch(update: Update, context: CallbackContext) -> str:
         message.reply_text("I really wish I could punch this user....")
         return log_message
 
-    res = chat.unban_member(user_id)  # unban on current user = kick
-    if res:
+    if res := chat.unban_member(user_id):
         # bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
         bot.sendMessage(
             chat.id,
@@ -393,8 +392,7 @@ def punchme(update: Update, context: CallbackContext):
         update.effective_message.reply_text("I wish I could... but you're an admin.")
         return
 
-    res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
-    if res:
+    if res := update.effective_chat.unban_member(user_id):
         update.effective_message.reply_text(
             "punches you out of the group!!",
         )
@@ -507,8 +505,7 @@ def banme(update: Update, context: CallbackContext):
         update.effective_message.reply_text("⚠️ I cannot banned admin.")
         return
 
-    res = update.effective_chat.ban_member(user_id)
-    if res:
+    if res := update.effective_chat.ban_member(user_id):
         update.effective_message.reply_text("Yes, you're right! GTFO..")
         return (
             "<b>{}:</b>"
